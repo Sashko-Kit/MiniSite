@@ -22,6 +22,7 @@
             <div class="item" data-cost="500" data-type="mc-cube" data-description="Click 4 times to break and earn mints.">Minecraft Cube - 500 mints</div>
             <div class="item" data-cost="600" data-type="fuuka" data-description="Generates hearts like fireworks.">Fuuka - 600 mints</div>
             <div class="item" data-cost="700" data-type="l4d2" data-description="Spawns zombies at the bottom of the screen.">L4D2 (real) - 700 mints</div>
+            <div class="item" data-cost="1000" data-type="masks-dlc" data-description="Unlock the Masks DLC for additional fun!">Masks DLC - 1000 mints</div>
         </div>
 
         <div id="sashy-container">
@@ -61,9 +62,23 @@
             <!-- Zombies will spawn here -->
         </div>
 
+        <div id="masks-dlc-container" style="display: none;">
+            <h2>Masks DLC</h2>
+            <img src="lootbox.png" id="lootbox-image" alt="Lootbox">
+            <div id="masks-inventory">
+                <h3>Masks Inventory</h3>
+                <!-- Masks will appear here -->
+            </div>
+        </div>
+
         <div id="memories">
             <h2>Memories</h2>
             <!-- Memories will be shown here for unlocking -->
+        </div>
+
+        <div id="unlocked-memories">
+            <h2>Unlocked Memories</h2>
+            <!-- Unlocked memories will be stored here -->
         </div>
     </div>
     <script src="script.js"></script>

@@ -2,6 +2,7 @@ let mintCount = 0;
 const mintButton = document.getElementById('mint-button');
 const mintCountDisplay = document.getElementById('mint-count');
 const memoriesContainer = document.getElementById('memories');
+const unlockedMemoriesContainer = document.getElementById('unlocked-memories');
 const storeItems = document.querySelectorAll('.item');
 const sashyUpgradesContainer = document.getElementById('sashy-upgrades');
 const sashyUpgrades = document.querySelectorAll('.sashy-upgrade');
@@ -18,6 +19,9 @@ const mcCubeContainer = document.getElementById('mc-cube-container');
 const fuukaContainer = document.getElementById('fuuka-container');
 const fuukaImage = document.getElementById('fuuka-image');
 const l4d2Container = document.getElementById('l4d2-container');
+const lootboxImage = document.getElementById('lootbox-image');
+const masksInventory = document.getElementById('masks-inventory');
+const masksDlcContainer = document.getElementById('masks-dlc-container');
 
 let mcCubeClicks = 0;
 let radioPlaying = false;
@@ -26,9 +30,17 @@ let clickMultiplier = 1;
 let autoMintMultiplier = 1;
 let sashySpeedMultiplier = 1;
 let memoryCount = 0;
+let masksUnlocked = false;
 
 const radioAudio = new Audio('radio.mp3');
 radioAudio.loop = true;
+
+const maskImages = {
+    common: ['common1.png', 'common2.png', 'common3.png', 'common4.png', 'common5.png'],
+    uncommon: ['uncommon1.png', 'uncommon2.png', 'uncommon3.png'],
+    epic: ['epic1.png', 'epic2.png'],
+    legendary: ['legendary1.png']
+};
 
 const memories = [
     { mintsRequired: 50, text: "Memory 1: A wonderful day at the park.", image: "path/to/image1.jpg", video: "path/to/video1.mp4", unlocked: false },
@@ -49,6 +61,10 @@ mintButton.addEventListener('click', () => {
 });
 
 storeItems.forEach(item => {
+    item.addEventListener('mouseover', () => {
+        const audio = new Audio('click.mp3');
+        audio.play();
+    });
     item.addEventListener('click', () => {
         const cost = parseInt(item.getAttribute('data-cost'));
         const type = item.getAttribute('data-type');
@@ -77,6 +93,9 @@ storeItems.forEach(item => {
             } else if (type === 'l4d2') {
                 l4d2Container.style.display = 'block';
                 spawnZombies();
+            } else if (type === 'masks-dlc') {
+                masksDlcContainer.style.display = 'block';
+                masksUnlocked = true;
             }
 
             item.style.display = 'none';
@@ -85,6 +104,10 @@ storeItems.forEach(item => {
 });
 
 sashyUpgrades.forEach(upgrade => {
+    upgrade.addEventListener('mouseover', () => {
+        const audio = new Audio('click.mp3');
+        audio.play();
+    });
     upgrade.addEventListener('click', () => {
         const cost = parseInt(upgrade.getAttribute('data-cost'));
         const upgradeType = upgrade.getAttribute('data-upgrade');
@@ -152,8 +175,42 @@ mcCubeButton.addEventListener('click', () => {
         const popAudio = new Audio('pop.mp3');
         popAudio.play();
     }
+    mcCubeButton.classList.add('clicked');
+    setTimeout(() => mcCubeButton.classList.remove('clicked'), 200);
     createBreakPieces();
 });
+
+lootboxImage.addEventListener('click', () => {
+    if (masksUnlocked) {
+        const unlockingAudio = new Audio('unlocking.wav');
+        unlockingAudio.play();
+        lootboxImage.classList.add('unlocking');
+        setTimeout(() => {
+            lootboxImage.classList.remove('unlocking');
+            const unlockedAudio = new Audio('unlocked.wav');
+            unlockedAudio.play();
+            addRandomMask();
+        }, 5000); // 5 seconds to unlock
+    }
+});
+
+function addRandomMask() {
+    const rarity = getRandomRarity();
+    const maskList = maskImages[rarity];
+    const randomMask = maskList[Math.floor(Math.random() * maskList.length)];
+    const maskImage = document.createElement('img');
+    maskImage.src = randomMask;
+    maskImage.classList.add('mask');
+    masksInventory.appendChild(maskImage);
+}
+
+function getRandomRarity() {
+    const random = Math.random();
+    if (random < 0.6) return 'common';       // 60% chance
+    if (random < 0.85) return 'uncommon';    // 25% chance
+    if (random < 0.95) return 'epic';        // 10% chance
+    return 'legendary';                      // 5% chance
+}
 
 function applyTemporaryBoost(multiplier, emoji, duration) {
     autoMintMultiplier *= multiplier;
@@ -269,10 +326,26 @@ function generateHearts() {
 }
 
 function moveFuuka() {
-    setInterval(() => {
-        fuukaContainer.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
-        fuukaContainer.style.bottom = `${Math.random() * (window.innerHeight - 100)}px`;
-    }, 3000);
+    let x = Math.random() * (window.innerWidth - fuukaContainer.offsetWidth);
+    let y = Math.random() * (window.innerHeight - fuukaContainer.offsetHeight);
+    let dx = 2;
+    let dy = 2;
+
+    const moveInterval = setInterval(() => {
+        x += dx;
+        y += dy;
+
+        if (x <= 0 || x + fuukaContainer.offsetWidth >= window.innerWidth) {
+            dx = -dx;
+        }
+
+        if (y <= 0 || y + fuukaContainer.offsetHeight >= window.innerHeight) {
+            dy = -dy;
+        }
+
+        fuukaContainer.style.left = `${x}px`;
+        fuukaContainer.style.top = `${y}px`;
+    }, 20); // Smooth movement
 }
 
 function spawnZombies() {
@@ -282,15 +355,16 @@ function spawnZombies() {
         zombie.classList.add('zombie');
         zombie.style.position = 'absolute';
         zombie.style.bottom = '20px';
-        zombie.style.left = `${Math.random() * window.innerWidth}px`;
-        document.body.appendChild(zombie);
+        zombie.style.left = '0px';
+        l4d2Container.appendChild(zombie);
 
         const interval = setInterval(() => {
-            if (parseInt(zombie.style.left) > window.innerWidth) {
+            const currentLeft = parseInt(zombie.style.left, 10);
+            if (currentLeft > window.innerWidth) {
                 clearInterval(interval);
-                document.body.removeChild(zombie);
+                l4d2Container.removeChild(zombie);
             } else {
-                zombie.style.left = `${parseInt(zombie.style.left) + 1}px`;
+                zombie.style.left = `${currentLeft + 2}px`; // Move zombie
             }
         }, 50);
 
@@ -299,9 +373,9 @@ function spawnZombies() {
             audio.play();
             mintCount += 5;
             updateMintCount();
-            document.body.removeChild(zombie);
+            l4d2Container.removeChild(zombie);
         });
-    }, 3000);
+    }, 3000); // Spawn zombies every 3 seconds
 }
 
 function startMintRain() {
@@ -360,7 +434,7 @@ function renderUnlockedMemory(memory) {
             Your browser does not support the video tag.
         </video>
     `;
-    memoriesContainer.appendChild(memoryDiv);
+    unlockedMemoriesContainer.appendChild(memoryDiv);
 }
 
 function generateAutoMints() {

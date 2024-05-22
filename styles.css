@@ -7,13 +7,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden; /* Prevents scrollbars due to moving elements */
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
+    overflow-y: auto; /* Allow scrolling */
 }
 
 button {
@@ -67,11 +67,11 @@ button:hover {
     text-align: center;
 }
 
-#memories {
+#memories, #unlocked-memories {
     margin-top: 40px;
 }
 
-.memory {
+.memory, .unlocked-memory {
     border: 1px solid #ccc;
     padding: 10px;
     margin-top: 20px;
@@ -156,7 +156,7 @@ button:hover {
     position: fixed;
     bottom: 20px;
     width: 100%;
-    height: 50px;
+    height: 100px; /* Increased height for better visibility */
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -167,6 +167,10 @@ button:hover {
     width: 100px;
     cursor: pointer;
     animation: bounce 2s infinite;
+}
+
+.zombie {
+    height: 80px; /* Increase height for better visibility */
 }
 
 @keyframes bounce {
@@ -205,15 +209,27 @@ button:hover {
     animation: fall 5s linear infinite;
 }
 
-.zombie {
-    position: absolute;
-    bottom: 20px;
-    width: 50px;
+#lootbox-image {
+    width: 100px;
     cursor: pointer;
-    animation: walk 10s linear infinite;
+    animation: idle 1s infinite;
 }
 
-@keyframes walk {
-    from { left: 0; }
-    to { left: 100vw; }
+@keyframes idle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.mask {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
 }
