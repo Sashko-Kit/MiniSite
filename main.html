@@ -14,73 +14,62 @@
         
         <div id="store">
             <h2>Store</h2>
-            <div class="item" data-cost="20" data-type="helper" data-description="Automatically generate 1 Mint per second.">Mini's Mini Helper (Sashy) - 20 mints</div>
-            <div class="item" data-cost="100" data-type="double-click" data-description="Double Mints you generate by clicking on the button.">Weapons of Mass Destruction - 100 mints</div>
-            <div class="item" data-cost="200" data-type="speed-up" data-description="Speed up everything that automatically generates mints by 2x.">Rice Pudding - 200 mints</div>
-            <div class="item" data-cost="300" data-type="factory" data-description="Generates mints automatically and has a chance to give a bonus when clicked.">2Fort_Mints_Factory - 300 mints</div>
-            <div class="item" data-cost="400" data-type="mint-cube" data-description="Generates mints and plays a tune when clicked.">Mint Cube - 400 mints</div>
-            <div class="item" data-cost="500" data-type="mc-cube" data-description="Click 4 times to break and earn mints.">Minecraft Cube - 500 mints</div>
-            <div class="item" data-cost="600" data-type="fuuka" data-description="Generates hearts like fireworks.">Fuuka - 600 mints</div>
-            <div class="item" data-cost="700" data-type="l4d2" data-description="Spawns zombies at the bottom of the screen.">L4D2 (real) - 700 mints</div>
-            <div class="item" data-cost="1000" data-type="masks-dlc" data-description="Unlock the Masks DLC for additional fun!">Masks DLC - 1000 mints</div>
+            <div class="item" data-cost="10" data-type="helper" data-description="Mini's Mini Helper (Sashy) - Automatically generate 1 Mint per second">Mini's Mini Helper (Sashy) - 10 mints</div>
+            <div class="item" data-cost="50" data-type="double-click" data-description="Weapons of Mass Destruction - Double Mints you generate by clicking on the button">Weapons of Mass Destruction - 50 mints</div>
+            <div class="item" data-cost="100" data-type="speed-up" data-description="Rice Pudding - Speed up everything that automatically generates mints by 2x">Rice Pudding - 100 mints</div>
+            <div class="item" data-cost="200" data-type="mint-cube" data-description="Mint Cube - Press to play music and generate mints">Mint Cube - 200 mints</div>
+            <div class="item" data-cost="500" data-type="mc-cube" data-description="Minecraft Cube - Click to break and gain mints">Minecraft Cube - 500 mints</div>
+            <div class="item" data-cost="1000" data-type="fuuka" data-description="Fuuka - Generates hearts and moves around the screen">Fuuka - 1000 mints</div>
+            <div class="item" data-cost="1000" data-type="masks-dlc" data-description="Masks DLC - Unlock random masks for mints">Masks DLC - 1000 mints</div>
+        </div>
+        
+        <div id="sashy-upgrades" style="display:none;">
+            <h2>Sashy Upgrades</h2>
+            <div class="sashy-upgrade" data-cost="50" data-upgrade="speed-2x" data-description="Hug Sashy - Speeds up 2x">Hug Sashy - 50 mints</div>
+            <div class="sashy-upgrade" data-cost="100" data-upgrade="temporary-2x" data-description="Pat Sashy - Temporary 2x">Pat Sashy - 100 mints</div>
+            <div class="sashy-upgrade" data-cost="200" data-upgrade="speed-3x" data-description="Kiss Sashy - Speed up 3x">Kiss Sashy - 200 mints</div>
+            <div class="sashy-upgrade" data-cost="500" data-upgrade="permanent-10x" data-description="Hold hands - Permanent upgrade that lets him 10x">Hold hands - 500 mints</div>
         </div>
 
-        <div id="sashy-container">
-            <div id="sashy">
-                <img src="sashy.png" alt="Sashy" id="sashy-image">
-                <div id="sashy-upgrades" style="display:none;">
-                    <h2>Sashy Upgrades</h2>
-                    <div class="sashy-upgrade" data-cost="50" data-upgrade="speed-2x" data-description="Speeds up Sashy by 2x for 30 seconds.">Hug Sashy - 50 mints</div>
-                    <div class="sashy-upgrade" data-cost="100" data-upgrade="temporary-2x" data-description="Speeds up Sashy by 2x temporarily.">Pat Sashy - 100 mints</div>
-                    <div class="sashy-upgrade" data-cost="200" data-upgrade="speed-3x" data-description="Speeds up Sashy by 3x for 30 seconds.">Kiss Sashy - 200 mints</div>
-                    <div class="sashy-upgrade" data-cost="500" data-upgrade="permanent-10x" data-description="Permanently increases Sashy's speed by 10x.">Hold hands - 500 mints</div>
-                </div>
-                <div id="sashy-timer" style="display: none;">
-                    <span id="sashy-timer-emoji">⏳</span>
-                    <span id="sashy-timer-countdown"></span>
-                </div>
-            </div>
-        </div>
-
-        <div id="factory-container" style="display: none;">
-            <img src="2Mints.png" id="factory-button" alt="2Fort Mints Factory">
-        </div>
-
-        <div id="mint-cube-container" style="display: none;">
-            <img src="cube.png" id="mint-cube-button" alt="Mint Cube">
-        </div>
-
-        <div id="mc-cube-container" style="display: none;">
-            <img src="minecube.png" id="mc-cube-button" alt="Minecraft Cube">
-        </div>
-
-        <div id="fuuka-container" style="display: none;">
-            <img src="fuuka.gif" id="fuuka-image" alt="Fuuka">
-        </div>
-
-        <div id="l4d2-container" style="display: none;">
-            <!-- Zombies will spawn here -->
-        </div>
-
-        <div id="masks-dlc-container" style="display: none;">
+        <div id="masks-dlc-container" style="display:none;">
             <h2>Masks DLC</h2>
-            <img src="lootbox.png" id="lootbox-image" alt="Lootbox">
-            <div id="masks-inventory">
-                <h3>Masks Inventory</h3>
-                <!-- Masks will appear here -->
-            </div>
+            <img id="lootbox-image" src="lootbox.png" alt="Lootbox">
+            <div id="masks-inventory"></div>
         </div>
 
         <div id="memories">
             <h2>Memories</h2>
-            <!-- Memories will be shown here for unlocking -->
         </div>
-
+        
         <div id="unlocked-memories">
             <h2>Unlocked Memories</h2>
-            <!-- Unlocked memories will be stored here -->
         </div>
     </div>
+    
+    <div id="sashy-container">
+        <img id="sashy-image" src="sashy.png" alt="Sashy">
+        <div id="sashy-timer" style="display:none;">
+            <span id="sashy-timer-emoji"></span>
+            <span id="sashy-timer-countdown"></span>
+        </div>
+    </div>
+    
+    <div id="factory-container" style="display:none;">
+        <img id="factory-button" src="2Mints.png" alt="Factory">
+    </div>
+    
+    <div id="mint-cube-container" style="display:none;">
+        <img id="mint-cube-button" src="cube.png" alt="Mint Cube">
+    </div>
+    
+    <div id="mc-cube-container" style="display:none;">
+        <img id="mc-cube-button" src="minecube.png" alt="Minecraft Cube">
+    </div>
+    
+    <div id="fuuka-container" style="display:none;">
+        <img id="fuuka-image" src="fuuka.gif" alt="Fuuka">
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

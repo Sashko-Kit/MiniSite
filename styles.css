@@ -13,7 +13,11 @@ body {
     max-width: 800px;
     margin: 0 auto;
     text-align: center;
-    overflow-y: auto; /* Allow scrolling */
+}
+
+html, body {
+    height: 100%;
+    overflow-y: scroll;
 }
 
 button {
@@ -156,11 +160,19 @@ button:hover {
     position: fixed;
     bottom: 20px;
     width: 100%;
-    height: 100px; /* Increased height for better visibility */
+    height: 200px; /* Increased height for better visibility */
     display: flex;
     justify-content: space-around;
     align-items: center;
     text-align: center;
+}
+
+#zombie-area {
+    width: 300px; /* Increase width for better visibility */
+    height: 150px; /* Increase height for better visibility */
+    cursor: pointer;
+    border: 1px solid #000; /* Optional: border to visualize the area */
+    position: relative;
 }
 
 #factory-button, #mint-cube-button, #mc-cube-button, #fuuka-image, .zombie {
@@ -232,4 +244,84 @@ button:hover {
     margin: 5px;
     display: inline-block;
     border: 1px solid #ccc;
+    position: relative;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.mask img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mask.selected {
+    border-color: red;
+}
+
+.mask:hover, .mask.selected {
+    border-color: yellow;
+}
+
+.mask .mask-description-container {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px;
+    text-align: center;
+    z-index: 1000;
+    transition: top 0.3s ease-in-out;
+}
+
+.mask:hover .mask-description-container, .mask.selected .mask-description-container {
+    display: block;
+    top: 110%;
+}
+
+.mask .mask-description-container span {
+    display: block;
+    font-weight: bold;
+}
+
+.mask .mask-description-container .rarity {
+    color: inherit;
+}
+
+.common {
+    color: lightblue;
+}
+
+.uncommon {
+    color: darkblue;
+}
+
+.epic {
+    color: purple;
+}
+
+.legendary {
+    color: red;
+}
+
+.sell-button {
+    margin-top: 5px;
+    padding: 5px;
+    background-color: #ff9999;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#sashy-upgrades, #masks-dlc-container {
+    display: inline-block;
+    vertical-align: top;
 }

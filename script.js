@@ -31,15 +31,31 @@ let autoMintMultiplier = 1;
 let sashySpeedMultiplier = 1;
 let memoryCount = 0;
 let masksUnlocked = false;
+let lootboxCooldown = false;
 
 const radioAudio = new Audio('radio.mp3');
 radioAudio.loop = true;
 
 const maskImages = {
-    common: ['common1.png', 'common2.png', 'common3.png', 'common4.png', 'common5.png'],
-    uncommon: ['uncommon1.png', 'uncommon2.png', 'uncommon3.png'],
-    epic: ['epic1.png', 'epic2.png'],
-    legendary: ['legendary1.png']
+    common: [
+        { src: 'common1.png', description: 'A basic mask', rarity: 'COMMON', value: 50 },
+        { src: 'common2.png', description: 'First steps into robbery', rarity: 'COMMON', value: 50 },
+        { src: 'common3.png', description: 'A very basic but sweet mask!', rarity: 'COMMON', value: 50 },
+        { src: 'common4.png', description: 'Huh what is this doing here?', rarity: 'COMMON', value: 50 },
+        { src: 'common5.png', description: "Honestly doesn't deserve to be common", rarity: 'COMMON', value: 50 }
+    ],
+    uncommon: [
+        { src: 'uncommon1.png', description: "Its beeen soo looong", rarity: 'UNCOMMON', value: 200 },
+        { src: 'uncommon2.png', description: 'The one mask to rule them all', rarity: 'UNCOMMON', value: 200 },
+        { src: 'uncommon3.png', description: 'Go to bed joker', rarity: 'UNCOMMON', value: 200 }
+    ],
+    epic: [
+        { src: 'epic1.png', description: 'Happiness.png!!!', rarity: 'EPIC', value: 500 },
+        { src: 'epic2.png', description: "WE'RE GOING TO BE RICH!", rarity: 'EPIC', value: 500 }
+    ],
+    legendary: [
+        { src: 'legendary1.png', description: 'I mean- cmon, of course this one would be the rarest!', rarity: 'LEGENDARY', value: 2000 }
+    ]
 };
 
 const memories = [
@@ -58,6 +74,13 @@ const memories = [
 mintButton.addEventListener('click', () => {
     mintCount += clickMultiplier;
     updateMintCount();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Numpad0') {
+        mintCount += 1000;
+        updateMintCount();
+    }
 });
 
 storeItems.forEach(item => {
@@ -90,9 +113,6 @@ storeItems.forEach(item => {
                 fuukaContainer.style.display = 'block';
                 moveFuuka();
                 generateHearts();
-            } else if (type === 'l4d2') {
-                l4d2Container.style.display = 'block';
-                spawnZombies();
             } else if (type === 'masks-dlc') {
                 masksDlcContainer.style.display = 'block';
                 masksUnlocked = true;
@@ -181,7 +201,10 @@ mcCubeButton.addEventListener('click', () => {
 });
 
 lootboxImage.addEventListener('click', () => {
-    if (masksUnlocked) {
+    if (masksUnlocked && !lootboxCooldown && mintCount >= 1000) {
+        mintCount -= 1000;
+        updateMintCount();
+        lootboxCooldown = true;
         const unlockingAudio = new Audio('unlocking.wav');
         unlockingAudio.play();
         lootboxImage.classList.add('unlocking');
@@ -190,6 +213,7 @@ lootboxImage.addEventListener('click', () => {
             const unlockedAudio = new Audio('unlocked.wav');
             unlockedAudio.play();
             addRandomMask();
+            lootboxCooldown = false;
         }, 5000); // 5 seconds to unlock
     }
 });
@@ -198,10 +222,32 @@ function addRandomMask() {
     const rarity = getRandomRarity();
     const maskList = maskImages[rarity];
     const randomMask = maskList[Math.floor(Math.random() * maskList.length)];
-    const maskImage = document.createElement('img');
-    maskImage.src = randomMask;
-    maskImage.classList.add('mask');
-    masksInventory.appendChild(maskImage);
+    const maskContainer = document.createElement('div');
+    maskContainer.classList.add('mask');
+    maskContainer.innerHTML = `
+        <img src="${randomMask.src}" alt="${randomMask.description}">
+        <div class="mask-description-container">
+            <div class="mask-description">
+                <q>${randomMask.description}</q>
+                <span class="rarity ${randomMask.rarity.toLowerCase()}">${randomMask.rarity}</span>
+                <button class="sell-button">Sell? (${randomMask.value} mints)</button>
+            </div>
+        </div>
+    `;
+    maskContainer.querySelector('.sell-button').addEventListener('click', () => {
+        mintCount += randomMask.value;
+        updateMintCount();
+        masksInventory.removeChild(maskContainer);
+    });
+    maskContainer.addEventListener('click', () => {
+        deselectAllMasks();
+        maskContainer.classList.add('selected');
+    });
+    masksInventory.appendChild(maskContainer);
+}
+
+function deselectAllMasks() {
+    document.querySelectorAll('.mask').forEach(mask => mask.classList.remove('selected'));
 }
 
 function getRandomRarity() {
@@ -348,48 +394,21 @@ function moveFuuka() {
     }, 20); // Smooth movement
 }
 
-function spawnZombies() {
-    setInterval(() => {
-        const zombie = document.createElement('img');
-        zombie.src = 'zombie.gif';
-        zombie.classList.add('zombie');
-        zombie.style.position = 'absolute';
-        zombie.style.bottom = '20px';
-        zombie.style.left = '0px';
-        l4d2Container.appendChild(zombie);
-
-        const interval = setInterval(() => {
-            const currentLeft = parseInt(zombie.style.left, 10);
-            if (currentLeft > window.innerWidth) {
-                clearInterval(interval);
-                l4d2Container.removeChild(zombie);
-            } else {
-                zombie.style.left = `${currentLeft + 2}px`; // Move zombie
-            }
-        }, 50);
-
-        zombie.addEventListener('click', () => {
-            const audio = new Audio('hit.mp3');
-            audio.play();
-            mintCount += 5;
-            updateMintCount();
-            l4d2Container.removeChild(zombie);
-        });
-    }, 3000); // Spawn zombies every 3 seconds
-}
-
 function startMintRain() {
     setInterval(() => {
-        const mint = document.createElement('div');
-        mint.textContent = '🍬';
-        mint.classList.add('mint-fall');
-        mint.style.left = `${Math.random() * window.innerWidth}px`;
-        document.body.appendChild(mint);
+        for (let i = 0; i < memoryCount * 2; i++) {
+            const mint = document.createElement('div');
+            mint.textContent = '🍬';
+            mint.classList.add('mint-fall');
+            mint.style.left = `${Math.random() * window.innerWidth}px`;
+            mint.style.animationDuration = `${Math.random() * 5 + 3}s`; // Random duration
+            document.body.appendChild(mint);
 
-        setTimeout(() => {
-            document.body.removeChild(mint);
-        }, 5000); // Mint falls for 5 seconds
-    }, 5000 / memoryCount); // Increase frequency with more memories
+            setTimeout(() => {
+                document.body.removeChild(mint);
+            }, 5000); // Mint falls for 5 seconds
+        }
+    }, 1000); // Increase frequency with more memories
 }
 
 function updateMintCount() {
