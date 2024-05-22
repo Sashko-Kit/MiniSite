@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini's Memory Clicker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Mini's Memory Clicker</h1>
+        <button id="mint-button">Click to Collect Mints!</button>
+        <p>Mints: <span id="mint-count">0</span></p>
+        
+        <div id="store">
+            <h2>Store</h2>
+            <div class="item" data-cost="20" data-type="helper" data-description="Automatically generate 1 Mint per second.">Mini's Mini Helper (Sashy) - 20 mints</div>
+            <div class="item" data-cost="100" data-type="double-click" data-description="Double Mints you generate by clicking on the button.">Weapons of Mass Destruction - 100 mints</div>
+            <div class="item" data-cost="200" data-type="speed-up" data-description="Speed up everything that automatically generates mints by 2x.">Rice Pudding - 200 mints</div>
+            <div class="item" data-cost="300" data-type="factory" data-description="Generates mints automatically and has a chance to give a bonus when clicked.">2Fort_Mints_Factory - 300 mints</div>
+            <div class="item" data-cost="400" data-type="mint-cube" data-description="Generates mints and plays a tune when clicked.">Mint Cube - 400 mints</div>
+            <div class="item" data-cost="500" data-type="mc-cube" data-description="Click 4 times to break and earn mints.">Minecraft Cube - 500 mints</div>
+            <div class="item" data-cost="600" data-type="fuuka" data-description="Generates hearts like fireworks.">Fuuka - 600 mints</div>
+            <div class="item" data-cost="700" data-type="l4d2" data-description="Spawns zombies at the bottom of the screen.">L4D2 (real) - 700 mints</div>
+        </div>
+
+        <div id="sashy-container">
+            <div id="sashy">
+                <img src="sashy.png" alt="Sashy" id="sashy-image">
+                <div id="sashy-upgrades" style="display:none;">
+                    <h2>Sashy Upgrades</h2>
+                    <div class="sashy-upgrade" data-cost="50" data-upgrade="speed-2x" data-description="Speeds up Sashy by 2x for 30 seconds.">Hug Sashy - 50 mints</div>
+                    <div class="sashy-upgrade" data-cost="100" data-upgrade="temporary-2x" data-description="Speeds up Sashy by 2x temporarily.">Pat Sashy - 100 mints</div>
+                    <div class="sashy-upgrade" data-cost="200" data-upgrade="speed-3x" data-description="Speeds up Sashy by 3x for 30 seconds.">Kiss Sashy - 200 mints</div>
+                    <div class="sashy-upgrade" data-cost="500" data-upgrade="permanent-10x" data-description="Permanently increases Sashy's speed by 10x.">Hold hands - 500 mints</div>
+                </div>
+                <div id="sashy-timer" style="display: none;">
+                    <span id="sashy-timer-emoji">⏳</span>
+                    <span id="sashy-timer-countdown"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="factory-container" style="display: none;">
+            <img src="2Mints.png" id="factory-button" alt="2Fort Mints Factory">
+        </div>
+
+        <div id="mint-cube-container" style="display: none;">
+            <img src="cube.png" id="mint-cube-button" alt="Mint Cube">
+        </div>
+
+        <div id="mc-cube-container" style="display: none;">
+            <img src="minecube.png" id="mc-cube-button" alt="Minecraft Cube">
+        </div>
+
+        <div id="fuuka-container" style="display: none;">
+            <img src="fuuka.gif" id="fuuka-image" alt="Fuuka">
+        </div>
+
+        <div id="l4d2-container" style="display: none;">
+            <!-- Zombies will spawn here -->
+        </div>
+
+        <div id="memories">
+            <h2>Memories</h2>
+            <!-- Memories will be shown here for unlocking -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
