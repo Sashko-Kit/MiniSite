@@ -5,6 +5,7 @@ const memoriesContainer = document.getElementById('memories');
 const unlockedMemoriesContainer = document.getElementById('unlocked-memories');
 const storeItems = document.querySelectorAll('.item');
 const sashyUpgradesContainer = document.getElementById('sashy-upgrades');
+const sashyUpgrades = document.querySelectorAll('.sashy-upgrade');
 const sashyImage = document.getElementById('sashy-image');
 const sashyTimer = document.getElementById('sashy-timer');
 const sashyTimerEmoji = document.getElementById('sashy-timer-emoji');
@@ -17,6 +18,7 @@ const mcCubeButton = document.getElementById('mc-cube-button');
 const mcCubeContainer = document.getElementById('mc-cube-container');
 const fuukaContainer = document.getElementById('fuuka-container');
 const fuukaImage = document.getElementById('fuuka-image');
+const l4d2Container = document.getElementById('l4d2-container');
 const lootboxImage = document.getElementById('lootbox-image');
 const masksInventory = document.getElementById('masks-inventory');
 const masksDlcContainer = document.getElementById('masks-dlc-container');
@@ -60,12 +62,12 @@ const memories = [
     { mintsRequired: 50, text: "Memory 1: A wonderful day at the park.", image: "path/to/image1.jpg", video: "path/to/video1.mp4", unlocked: false },
     { mintsRequired: 100, text: "Memory 2: Our trip to the beach.", image: "path/to/image2.jpg", video: "path/to/video2.mp4", unlocked: false },
     { mintsRequired: 150, text: "Memory 3: A special birthday celebration.", image: "path/to/image3.jpg", video: "path/to/video3.mp4", unlocked: false },
-    { mintsRequired: 200, text: "Memory 4: Family reunion.", image: "path/to/image4.jpg", video: "path/to/image4.mp4", unlocked: false },
-    { mintsRequired: 250, text: "Memory 5: Our first trip abroad.", image: "path/to/image5.jpg", video: "path/to/image5.mp4", unlocked: false },
-    { mintsRequired: 300, text: "Memory 6: Fun at the amusement park.", image: "path/to/image6.jpg", video: "path/to/image6.mp4", unlocked: false },
-    { mintsRequired: 350, text: "Memory 7: Our anniversary.", image: "path/to/image7.jpg", video: "path/to/image7.mp4", unlocked: false },
-    { mintsRequired: 400, text: "Memory 8: Holiday celebration.", image: "path/to/image8.jpg", video: "path/to/image8.mp4", unlocked: false },
-    { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/image9.mp4", unlocked: false },
+    { mintsRequired: 200, text: "Memory 4: Family reunion.", image: "path/to/image4.jpg", video: "path/to/video4.mp4", unlocked: false },
+    { mintsRequired: 250, text: "Memory 5: Our first trip abroad.", image: "path/to/image5.jpg", video: "path/to/video5.mp4", unlocked: false },
+    { mintsRequired: 300, text: "Memory 6: Fun at the amusement park.", image: "path/to/image6.jpg", video: "path/to/video6.mp4", unlocked: false },
+    { mintsRequired: 350, text: "Memory 7: Our anniversary.", image: "path/to/image7.jpg", video: "path/to/video7.mp4", unlocked: false },
+    { mintsRequired: 400, text: "Memory 8: Holiday celebration.", image: "path/to/image8.jpg", video: "path/to/video8.mp4", unlocked: false },
+    { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/video9.mp4", unlocked: false },
     { mintsRequired: 500, text: "Memory 10: New Year's Eve party.", image: "path/to/image10.jpg", video: "path/to/video10.mp4", unlocked: false }
 ];
 
@@ -105,7 +107,6 @@ storeItems.forEach(item => {
                 factoryContainer.style.display = 'block';
             } else if (type === 'mint-cube') {
                 mintCubeContainer.style.display = 'block';
-                moveMintCube();
             } else if (type === 'mc-cube') {
                 mcCubeContainer.style.display = 'block';
             } else if (type === 'fuuka') {
@@ -118,6 +119,36 @@ storeItems.forEach(item => {
             }
 
             item.style.display = 'none';
+        }
+    });
+});
+
+sashyUpgrades.forEach(upgrade => {
+    upgrade.addEventListener('mouseover', () => {
+        const audio = new Audio('click.mp3');
+        audio.play();
+    });
+    upgrade.addEventListener('click', () => {
+        const cost = parseInt(upgrade.getAttribute('data-cost'));
+        const upgradeType = upgrade.getAttribute('data-upgrade');
+
+        if (mintCount >= cost) {
+            mintCount -= cost;
+            updateMintCount();
+
+            if (upgradeType === 'speed-2x') {
+                sashySpeedMultiplier *= 2;
+                startTimer('⏳', 30, () => sashySpeedMultiplier /= 2);
+            } else if (upgradeType === 'temporary-2x') {
+                applyTemporaryBoost(2, '⏳', 30);
+            } else if (upgradeType === 'speed-3x') {
+                sashySpeedMultiplier *= 3;
+                startTimer('🔥', 30, () => sashySpeedMultiplier /= 3);
+            } else if (upgradeType === 'permanent-10x') {
+                autoMintIncrement *= 10;
+            }
+
+            upgrade.setAttribute('data-cost', Math.ceil(cost * 1.2)); // Increase cost for next purchase
         }
     });
 });
@@ -248,7 +279,7 @@ function startTimer(emoji, duration, callback) {
 }
 
 function showHearts() {
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 5; i++) {
         const heart = document.createElement('div');
         heart.textContent = '❤️';
         heart.classList.add('heart');
@@ -363,42 +394,6 @@ function moveFuuka() {
     }, 20); // Smooth movement
 }
 
-function moveSashy() {
-    let x = Math.random() * 150; // Designated width
-    let y = Math.random() * 300; // Designated height
-    let dx = 1;
-    let dy = 1;
-
-    const moveInterval = setInterval(() => {
-        x += dx * sashySpeedMultiplier;
-        y += dy * sashySpeedMultiplier;
-
-        if (x <= 0 || x + sashyImage.offsetWidth >= 150) {
-            dx = -dx;
-        }
-
-        if (y <= 0 || y + sashyImage.offsetHeight >= 300) {
-            dy = -dy;
-        }
-
-        sashyImage.style.left = `${x}px`;
-        sashyImage.style.top = `${y}px`;
-    }, 50); // Smooth movement
-
-    // Change Sashy's expression periodically
-    setInterval(() => {
-        sashyImage.src = 'sashy2.png';
-        setTimeout(() => {
-            sashyImage.src = 'sashy.png';
-        }, 1000); // Change back to original after 1 second
-    }, 5000); // Change expression every 5 seconds
-}
-
-function moveMintCube() {
-    mintCubeContainer.style.bottom = '20px';
-    mintCubeContainer.style.left = '20px';
-}
-
 function startMintRain() {
     setInterval(() => {
         for (let i = 0; i < memoryCount * 2; i++) {
@@ -466,38 +461,5 @@ function generateAutoMints() {
     updateMintCount();
 }
 
-// New purchasables and functionalities for Sashy's store
-const newUpgrades = [
-    { name: 'Double Auto Mints (Temporary)', cost: 100, description: 'Temporarily doubles the auto-generated mints by Sashy for 30 seconds', effect: () => applyTemporaryBoost(2, '🚀', 30) },
-    { name: 'Hug Sashy', cost: 10, description: 'Spawns a lot of hearts', effect: () => showHearts() },
-    { name: 'Mint Magnet', cost: 200, description: 'Increases the click mint generation by 5x for 60 seconds', effect: () => applyTemporaryBoost(5, '✨', 60) },
-    { name: 'Speed Burst', cost: 150, description: 'Temporarily increases Sashy\'s auto mint generation speed by 3x for 30 seconds', effect: () => applyTemporaryBoost(3, '⚡', 30) },
-    { name: 'Lucky Charm', cost: 250, description: 'Increases the chance of getting a critical mint (10x) by 10% for 30 seconds', effect: () => applyTemporaryBoost(10, '🍀', 30) }
-];
-
-newUpgrades.forEach(upgrade => {
-    const upgradeElement = document.createElement('div');
-    upgradeElement.classList.add('sashy-upgrade');
-    upgradeElement.setAttribute('data-cost', upgrade.cost);
-    upgradeElement.setAttribute('data-description', upgrade.description);
-    upgradeElement.setAttribute('data-upgrade', upgrade.name.toLowerCase().replace(/ /g, '-'));
-    upgradeElement.textContent = `${upgrade.name} - ${upgrade.cost} mints`;
-
-    upgradeElement.addEventListener('click', () => {
-        const cost = parseInt(upgradeElement.getAttribute('data-cost'));
-        if (mintCount >= cost) {
-            mintCount -= cost;
-            updateMintCount();
-            upgrade.effect();
-            upgradeElement.setAttribute('data-cost', Math.ceil(cost * 1.5)); // Increase cost for next purchase
-            upgradeElement.textContent = `${upgrade.name} - ${Math.ceil(cost * 1.5)} mints`;
-        }
-    });
-
-    sashyUpgradesContainer.appendChild(upgradeElement);
-});
-
 renderLockedMemories();
 setInterval(generateAutoMints, 1000); // Generate mints every second based on autoMintIncrement
-moveSashy();
-moveMintCube();
