@@ -108,13 +108,8 @@ button:hover {
 
 #sashy-image {
     width: 100px;
-    animation: move 2s infinite alternate;
     cursor: pointer;
-}
-
-@keyframes move {
-    0% { transform: translateX(-10px); }
-    100% { transform: translateX(10px); }
+    position: absolute;
 }
 
 @keyframes fadeUp {
@@ -224,104 +219,75 @@ button:hover {
 #lootbox-image {
     width: 100px;
     cursor: pointer;
-    animation: idle 1s infinite;
+    position: relative;
+    animation: float 3s infinite;
 }
 
-@keyframes idle {
+@keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
-}
-
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
+    50% { transform: translateY(-10px); }
 }
 
 .mask {
-    width: 100px;
-    height: 100px;
-    margin: 5px;
     display: inline-block;
-    border: 1px solid #ccc;
+    margin: 10px;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
     position: relative;
-    box-sizing: border-box;
-    overflow: visible;
 }
 
 .mask img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 100px;
+    height: 100px;
+    display: block;
 }
 
 .mask.selected {
-    border-color: red;
+    border-color: #f00;
 }
 
-.mask:hover, .mask.selected {
-    border-color: yellow;
-}
-
-.mask .mask-description-container {
-    display: none;
+.mask-description-container {
     position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: -60px; /* Adjust to fit the description below the image */
+    left: 0;
+    right: 0;
     background-color: #333;
     color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    width: 200px;
+    padding: 5px;
+    border-radius: 3px;
     text-align: center;
-    z-index: 1000;
-    transition: top 0.3s ease-in-out;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 12px;
 }
 
-.mask:hover .mask-description-container, .mask.selected .mask-description-container {
-    display: block;
-    top: 110%;
+.mask:hover .mask-description-container,
+.mask.selected .mask-description-container {
+    opacity: 1;
 }
 
-.mask .mask-description-container span {
-    display: block;
-    font-weight: bold;
-}
-
-.mask .mask-description-container .rarity {
-    color: inherit;
-}
-
-.common {
+.rarity.common {
     color: lightblue;
 }
 
-.uncommon {
+.rarity.uncommon {
     color: darkblue;
 }
 
-.epic {
+.rarity.epic {
     color: purple;
 }
 
-.legendary {
+.rarity.legendary {
     color: red;
 }
 
 .sell-button {
-    margin-top: 5px;
-    padding: 5px;
-    background-color: #ff9999;
+    background-color: #f00;
+    color: #fff;
     border: none;
-    border-radius: 3px;
-    color: white;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 12px;
-}
-
-#sashy-upgrades, #masks-dlc-container {
-    display: inline-block;
-    vertical-align: top;
+    margin-top: 5px;
+    border-radius: 3px;
 }
