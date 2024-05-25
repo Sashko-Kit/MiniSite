@@ -6,9 +6,6 @@ const unlockedMemoriesContainer = document.getElementById('unlocked-memories');
 const storeItems = document.querySelectorAll('.item');
 const sashyUpgradesContainer = document.getElementById('sashy-upgrades');
 const sashyImage = document.getElementById('sashy-image');
-const sashyTimer = document.getElementById('sashy-timer');
-const sashyTimerEmoji = document.getElementById('sashy-timer-emoji');
-const sashyTimerCountdown = document.getElementById('sashy-timer-countdown');
 const factoryButton = document.getElementById('factory-button');
 const factoryContainer = document.getElementById('factory-container');
 const mintCubeButton = document.getElementById('mint-cube-button');
@@ -59,13 +56,13 @@ const maskImages = {
 const memories = [
     { mintsRequired: 50, text: "Memory 1: A wonderful day at the park.", image: "path/to/image1.jpg", video: "path/to/video1.mp4", unlocked: false },
     { mintsRequired: 100, text: "Memory 2: Our trip to the beach.", image: "path/to/image2.jpg", video: "path/to/video2.mp4", unlocked: false },
-    { mintsRequired: 150, text: "Memory 3: A special birthday celebration.", image: "path/to/image3.jpg", video: "path/to/video3.mp4", unlocked: false },
+    { mintsRequired: 150, text: "Memory 3: A special birthday celebration.", image: "path/to/image3.jpg", video: "path/to/image3.mp4", unlocked: false },
     { mintsRequired: 200, text: "Memory 4: Family reunion.", image: "path/to/image4.jpg", video: "path/to/image4.mp4", unlocked: false },
     { mintsRequired: 250, text: "Memory 5: Our first trip abroad.", image: "path/to/image5.jpg", video: "path/to/image5.mp4", unlocked: false },
     { mintsRequired: 300, text: "Memory 6: Fun at the amusement park.", image: "path/to/image6.jpg", video: "path/to/image6.mp4", unlocked: false },
     { mintsRequired: 350, text: "Memory 7: Our anniversary.", image: "path/to/image7.jpg", video: "path/to/image7.mp4", unlocked: false },
     { mintsRequired: 400, text: "Memory 8: Holiday celebration.", image: "path/to/image8.jpg", video: "path/to/image8.mp4", unlocked: false },
-    { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/image9.mp4", unlocked: false },
+    { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/video9.mp4", unlocked: false },
     { mintsRequired: 500, text: "Memory 10: New Year's Eve party.", image: "path/to/image10.jpg", video: "path/to/video10.mp4", unlocked: false }
 ];
 
@@ -170,8 +167,8 @@ mcCubeButton.addEventListener('click', () => {
 });
 
 lootboxImage.addEventListener('click', () => {
-    if (masksUnlocked && !lootboxCooldown && mintCount >= 1000) {
-        mintCount -= 1000;
+    if (masksUnlocked && !lootboxCooldown && mintCount >= 500) {
+        mintCount -= 500;
         updateMintCount();
         lootboxCooldown = true;
         const unlockingAudio = new Audio('unlocking.wav');
@@ -395,7 +392,7 @@ function moveSashy() {
 }
 
 function moveMintCube() {
-    mintCubeContainer.style.bottom = '20px';
+    mintCubeContainer.style.bottom = '150px';
     mintCubeContainer.style.left = '20px';
 }
 
@@ -466,31 +463,32 @@ function generateAutoMints() {
     updateMintCount();
 }
 
-// New purchasables and functionalities for Sashy's store
-const newUpgrades = [
-    { name: 'Double Auto Mints (Temporary)', cost: 100, description: 'Temporarily doubles the auto-generated mints by Sashy for 30 seconds', effect: () => applyTemporaryBoost(2, '🚀', 30) },
-    { name: 'Hug Sashy', cost: 10, description: 'Spawns a lot of hearts', effect: () => showHearts() },
-    { name: 'Mint Magnet', cost: 200, description: 'Increases the click mint generation by 5x for 60 seconds', effect: () => applyTemporaryBoost(5, '✨', 60) },
-    { name: 'Speed Burst', cost: 150, description: 'Temporarily increases Sashy\'s auto mint generation speed by 3x for 30 seconds', effect: () => applyTemporaryBoost(3, '⚡', 30) },
-    { name: 'Lucky Charm', cost: 250, description: 'Increases the chance of getting a critical mint (10x) by 10% for 30 seconds', effect: () => applyTemporaryBoost(10, '🍀', 30) }
+// New Sashy Upgrades
+const sashyUpgrades = [
+    { name: 'Sashy\'s PC', cost: 10, increment: 1, description: 'He can program +1 Mints a second' },
+    { name: 'Sashy\'s Books', cost: 50, increment: 5, description: 'Having learned the way of Mints, he can now generate +5 Mints a second' },
+    { name: 'Sashy\'s Trinkets', cost: 100, increment: 10, description: 'Sashy\'s collection of trinkets makes him happier, making him generate +10 Mints a second- Wait its just mostly knifes?' },
+    { name: 'Sashy\'s Plushies', cost: 500, increment: 50, description: 'Feeling protected and having a good night sleep, Sashy generates +50 Mints a second' },
+    { name: 'Sashy\'s Motivation', cost: 1000, increment: 100, description: 'Sashy just got a burst of motivation! Nothing can stop him from generating +100 Mints a second now!' },
+    { name: 'Mini Plushie', cost: 5000, increment: 500, description: 'Sashy\'s secret weapon to staying happy, making him generate +500 Mints a second!' }
 ];
 
-newUpgrades.forEach(upgrade => {
+sashyUpgrades.forEach(upgrade => {
     const upgradeElement = document.createElement('div');
     upgradeElement.classList.add('sashy-upgrade');
     upgradeElement.setAttribute('data-cost', upgrade.cost);
     upgradeElement.setAttribute('data-description', upgrade.description);
-    upgradeElement.setAttribute('data-upgrade', upgrade.name.toLowerCase().replace(/ /g, '-'));
+    upgradeElement.setAttribute('data-increment', upgrade.increment);
     upgradeElement.textContent = `${upgrade.name} - ${upgrade.cost} mints`;
 
     upgradeElement.addEventListener('click', () => {
         const cost = parseInt(upgradeElement.getAttribute('data-cost'));
+        const increment = parseInt(upgradeElement.getAttribute('data-increment'));
         if (mintCount >= cost) {
             mintCount -= cost;
             updateMintCount();
-            upgrade.effect();
-            upgradeElement.setAttribute('data-cost', Math.ceil(cost * 1.5)); // Increase cost for next purchase
-            upgradeElement.textContent = `${upgrade.name} - ${Math.ceil(cost * 1.5)} mints`;
+            autoMintIncrement += increment;
+            upgradeElement.style.display = 'none';
         }
     });
 

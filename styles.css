@@ -57,18 +57,28 @@ button:hover {
     transform: scale(1.05);
 }
 
-.item:hover::after, .sashy-upgrade:hover::after {
-    content: attr(data-description);
+.item:hover .item-description, .sashy-upgrade:hover .sashy-upgrade-description {
+    display: block;
+}
+
+.item .item-description, .sashy-upgrade .sashy-upgrade-description {
+    display: none;
     position: absolute;
-    top: -20px;
-    left: 0;
+    top: 110%;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: #333;
     color: #fff;
     padding: 5px;
     border-radius: 3px;
     font-size: 12px;
-    width: 100%;
-    text-align: center;
+    white-space: pre-wrap; /* Allows multiline descriptions */
+    z-index: 1;
+}
+
+.cube-image {
+    width: 100px; /* Ensure cubes are the same size */
+    height: 100px;
 }
 
 #memories, #unlocked-memories {
@@ -131,7 +141,7 @@ button:hover {
 
 #mint-cube-container {
     position: fixed;
-    bottom: 100px;
+    bottom: 150px;
     left: 20px;
     text-align: center;
 }
@@ -144,76 +154,10 @@ button:hover {
 }
 
 #fuuka-container {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-}
-
-#l4d2-container {
     position: fixed;
     bottom: 20px;
-    width: 100%;
-    height: 200px; /* Increased height for better visibility */
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    left: 20px;
     text-align: center;
-}
-
-#zombie-area {
-    width: 300px; /* Increase width for better visibility */
-    height: 150px; /* Increase height for better visibility */
-    cursor: pointer;
-    border: 1px solid #000; /* Optional: border to visualize the area */
-    position: relative;
-}
-
-#factory-button, #mint-cube-button, #mc-cube-button, #fuuka-image, .zombie {
-    width: 100px;
-    cursor: pointer;
-    animation: bounce 2s infinite;
-}
-
-.zombie {
-    height: 80px; /* Increase height for better visibility */
-}
-
-@keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.note {
-    position: absolute;
-    animation: fadeUp 1s forwards;
-}
-
-@keyframes break {
-    0% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(100px) rotate(720deg); }
-}
-
-.break-piece {
-    animation: break 1s forwards;
-}
-
-.mint {
-    position: absolute;
-    animation: fadeUp 1s forwards;
-}
-
-@keyframes fall {
-    from { transform: translateY(0); }
-    to { transform: translateY(100vh); }
-}
-
-.mint-fall {
-    position: absolute;
-    top: 0;
-    font-size: 24px;
-    animation: fall 5s linear infinite;
 }
 
 #lootbox-image {

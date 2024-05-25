@@ -10,66 +10,52 @@
     <div class="container">
         <h1>Welcome to Mini's Memory Clicker</h1>
         <button id="mint-button">Click to Collect Mints!</button>
-        <p>Mints: <span id="mint-count">0</span></p>
-        
+        <div id="mint-count">0</div>
         <div id="store">
             <h2>Store</h2>
-            <div class="item" data-cost="10" data-type="helper" data-description="Mini's Mini Helper (Sashy) - Automatically generate 1 Mint per second">Mini's Mini Helper (Sashy) - 10 mints</div>
-            <div class="item" data-cost="50" data-type="double-click" data-description="Weapons of Mass Destruction - Double Mints you generate by clicking on the button">Weapons of Mass Destruction - 50 mints</div>
-            <div class="item" data-cost="100" data-type="speed-up" data-description="Rice Pudding - Speed up everything that automatically generates mints by 2x">Rice Pudding - 100 mints</div>
-            <div class="item" data-cost="200" data-type="mint-cube" data-description="Mint Cube - Press to play music and generate mints">Mint Cube - 200 mints</div>
-            <div class="item" data-cost="500" data-type="mc-cube" data-description="Minecraft Cube - Click to break and gain mints">Minecraft Cube - 500 mints</div>
-            <div class="item" data-cost="1000" data-type="fuuka" data-description="Fuuka - Generates hearts and moves around the screen">Fuuka - 1000 mints</div>
-            <div class="item" data-cost="1000" data-type="masks-dlc" data-description="Masks DLC - Unlock random masks for mints">Masks DLC - 1000 mints</div>
+            <div class="item" data-cost="10" data-description="A helper to generate 1 mint per second." data-type="helper">Mini's Mini Helper (Sashy) - 10 mints</div>
+            <div class="item" data-cost="50" data-description="Doubles the mints you generate by clicking." data-type="double-click">Weapons of Mass Destruction - 50 mints</div>
+            <div class="item" data-cost="100" data-description="Speeds up everything that automatically generates mints by 2x." data-type="speed-up">Rice Pudding - 100 mints</div>
+            <div class="item" data-cost="200" data-description="Generates mints periodically and plays music." data-type="mint-cube">Mint Cube - 200 mints</div>
+            <div class="item" data-cost="300" data-description="A cube that needs to be clicked 4 times to break and rewards mints." data-type="mc-cube">Minecraft Cube - 300 mints</div>
+            <div class="item" data-cost="400" data-description="Generates hearts and moves around the screen." data-type="fuuka">Fuuka - 400 mints</div>
+            <div class="item" data-cost="500" data-description="Unlocks the Masks DLC to gain random masks and sell them for mints." data-type="masks-dlc">Masks DLC - 500 mints</div>
         </div>
-        
-        <div id="sashy-upgrades" style="display:none;">
-            <h2>Sashy Upgrades</h2>
-            <div class="sashy-upgrade" data-cost="50" data-upgrade="speed-2x" data-description="Hug Sashy - Speeds up 2x">Hug Sashy - 50 mints</div>
-            <div class="sashy-upgrade" data-cost="100" data-upgrade="temporary-2x" data-description="Pat Sashy - Temporary 2x">Pat Sashy - 100 mints</div>
-            <div class="sashy-upgrade" data-cost="200" data-upgrade="speed-3x" data-description="Kiss Sashy - Speed up 3x">Kiss Sashy - 200 mints</div>
-            <div class="sashy-upgrade" data-cost="500" data-upgrade="permanent-10x" data-description="Hold hands - Permanent upgrade that lets him 10x">Hold hands - 500 mints</div>
+        <div id="sashy-upgrades" style="display: none;">
+            <h2>Sashy's Upgrades</h2>
+            <!-- New Sashy Upgrades will be inserted here by JavaScript -->
         </div>
-
-        <div id="masks-dlc-container" style="display:none;">
-            <h2>Masks DLC</h2>
+        <div id="memories">
+            <h2>Memories</h2>
+            <!-- Memories will be inserted here by JavaScript -->
+        </div>
+        <div id="unlocked-memories">
+            <h2>Unlocked Memories</h2>
+            <!-- Unlocked Memories will be inserted here by JavaScript -->
+        </div>
+        <div id="masks-dlc-container" style="display: none;">
             <img id="lootbox-image" src="lootbox.png" alt="Lootbox">
             <div id="masks-inventory"></div>
         </div>
-
-        <div id="memories">
-            <h2>Memories</h2>
+        <div id="factory-container" style="display: none;">
+            <img id="factory-button" src="2mints.png" alt="Factory" class="cube-image">
         </div>
-        
-        <div id="unlocked-memories">
-            <h2>Unlocked Memories</h2>
+        <div id="mint-cube-container" style="display: none;">
+            <img id="mint-cube-button" src="cube.png" alt="Mint Cube" class="cube-image">
+        </div>
+        <div id="mc-cube-container" style="display: none;">
+            <img id="mc-cube-button" src="minecube.png" alt="Minecraft Cube" class="cube-image">
+        </div>
+        <div id="fuuka-container" style="display: none;">
+            <img id="fuuka-image" src="fuuka.gif" alt="Fuuka">
+        </div>
+        <div id="sashy-container">
+            <img id="sashy-image" src="sashy.png" alt="Sashy">
+            <div id="sashy-timer" style="display: none;">
+                <span id="sashy-timer-emoji"></span> <span id="sashy-timer-countdown"></span>
+            </div>
         </div>
     </div>
-    
-    <div id="sashy-container">
-        <img id="sashy-image" src="sashy.png" alt="Sashy">
-        <div id="sashy-timer" style="display:none;">
-            <span id="sashy-timer-emoji"></span>
-            <span id="sashy-timer-countdown"></span>
-        </div>
-    </div>
-    
-    <div id="factory-container" style="display:none;">
-        <img id="factory-button" src="2Mints.png" alt="Factory">
-    </div>
-    
-    <div id="mint-cube-container" style="display:none;">
-        <img id="mint-cube-button" src="cube.png" alt="Mint Cube">
-    </div>
-    
-    <div id="mc-cube-container" style="display:none;">
-        <img id="mc-cube-button" src="minecube.png" alt="Minecraft Cube">
-    </div>
-    
-    <div id="fuuka-container" style="display:none;">
-        <img id="fuuka-image" src="fuuka.gif" alt="Fuuka">
-    </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
