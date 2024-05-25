@@ -57,12 +57,8 @@ button:hover {
     transform: scale(1.05);
 }
 
-.item:hover .item-description, .sashy-upgrade:hover .sashy-upgrade-description {
-    display: block;
-}
-
 .item .item-description, .sashy-upgrade .sashy-upgrade-description {
-    display: none;
+    display: block;
     position: absolute;
     top: 110%;
     left: 50%;
@@ -141,7 +137,7 @@ button:hover {
 
 #mint-cube-container {
     position: fixed;
-    bottom: 150px;
+    bottom: 20px;
     left: 20px;
     text-align: center;
 }
@@ -156,8 +152,14 @@ button:hover {
 #fuuka-container {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
+}
+
+#fuuka-image {
+    width: 100px; /* Adjust the size of Fuuka */
+    height: 100px;
 }
 
 #lootbox-image {
@@ -235,3 +237,17 @@ button:hover {
     margin-top: 5px;
     border-radius: 3px;
 }
+
+.mint-fall {
+    position: fixed;
+    top: -50px;
+    font-size: 24px;
+    animation: mintFall linear;
+}
+
+@keyframes mintFall {
+    to {
+        top: 100vh;
+    }
+}
+

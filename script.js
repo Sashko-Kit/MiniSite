@@ -392,7 +392,7 @@ function moveSashy() {
 }
 
 function moveMintCube() {
-    mintCubeContainer.style.bottom = '150px';
+    mintCubeContainer.style.bottom = '20px';
     mintCubeContainer.style.left = '20px';
 }
 
