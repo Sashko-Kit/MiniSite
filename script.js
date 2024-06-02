@@ -54,13 +54,13 @@ const maskImages = {
 };
 
 const memories = [
-    { mintsRequired: 50, text: "Memory 1: A wonderful day at the park.", image: "path/to/image1.jpg", video: "path/to/video1.mp4", unlocked: false },
-    { mintsRequired: 100, text: "Memory 2: Our trip to the beach.", image: "path/to/image2.jpg", video: "path/to/video2.mp4", unlocked: false },
-    { mintsRequired: 150, text: "Memory 3: A special birthday celebration.", image: "path/to/image3.jpg", video: "path/to/image3.mp4", unlocked: false },
-    { mintsRequired: 200, text: "Memory 4: Family reunion.", image: "path/to/image4.jpg", video: "path/to/image4.mp4", unlocked: false },
-    { mintsRequired: 250, text: "Memory 5: Our first trip abroad.", image: "path/to/image5.jpg", video: "path/to/image5.mp4", unlocked: false },
-    { mintsRequired: 300, text: "Memory 6: Fun at the amusement park.", image: "path/to/image6.jpg", video: "path/to/image6.mp4", unlocked: false },
-    { mintsRequired: 350, text: "Memory 7: Our anniversary.", image: "path/to/image7.jpg", video: "path/to/image7.mp4", unlocked: false },
+    { mintsRequired: 1000, text: "The way we met!", image: "path/to/image1.jpg", video: "HowWeMet.mp4", unlocked: false },
+    { mintsRequired: 2000, text: "Testing proved to be quiet fun when you were my partner!", image: "path/to/image2.jpg", video: "ThatOnePortal2Time.mp4", unlocked: false },
+    { mintsRequired: 3000, text: "And from then on.. I suddenly became more happier!", image: "path/to/image3.jpg", video: "FirstTimeILoveYou.mp4", unlocked: false },
+    { mintsRequired: 4000, text: "WE BECAME OFFICIAL!", image: "path/to/image4.jpg", video: "path/to/image4.mp4", unlocked: false },
+    { mintsRequired: 5000, text: "Most beloved item I own!", image: "path/to/image5.jpg", video: "My most beloved item.mp4", unlocked: false },
+    { mintsRequired: 6000, text: "Our very first date!", image: "path/to/image6.jpg", video: "OurFirstDate.mp4", unlocked: false },
+    { mintsRequired: 7000, text: "Everytime I play with you.. its a precious memory!", image: "", video: "GaMINIg.mp4", unlocked: false },
     { mintsRequired: 400, text: "Memory 8: Holiday celebration.", image: "path/to/image8.jpg", video: "path/to/image8.mp4", unlocked: false },
     { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/video9.mp4", unlocked: false },
     { mintsRequired: 500, text: "Memory 10: New Year's Eve party.", image: "path/to/image10.jpg", video: "path/to/video10.mp4", unlocked: false }
@@ -449,13 +449,17 @@ function renderUnlockedMemory(memory) {
     memoryDiv.classList.add('memory');
     memoryDiv.innerHTML = `
         <p>${memory.text}</p>
-        <img src="${memory.image}" alt="Memory Image">
-        <video controls>
+        <video controls width="600">
             <source src="${memory.video}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     `;
     unlockedMemoriesContainer.appendChild(memoryDiv);
+
+    // Ensure video is not muted
+    const videoElement = memoryDiv.querySelector('video');
+    videoElement.muted = false;
+    videoElement.volume = 1.0;
 }
 
 function generateAutoMints() {
