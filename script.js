@@ -57,13 +57,10 @@ const memories = [
     { mintsRequired: 1000, text: "The way we met!", image: "path/to/image1.jpg", video: "HowWeMet.mp4", unlocked: false },
     { mintsRequired: 2000, text: "Testing proved to be quiet fun when you were my partner!", image: "path/to/image2.jpg", video: "ThatOnePortal2Time.mp4", unlocked: false },
     { mintsRequired: 3000, text: "And from then on.. I suddenly became more happier!", image: "path/to/image3.jpg", video: "FirstTimeILoveYou.mp4", unlocked: false },
-    { mintsRequired: 4000, text: "WE BECAME OFFICIAL!", image: "path/to/image4.jpg", video: "path/to/image4.mp4", unlocked: false },
+    { mintsRequired: 4000, text: "WE BECAME OFFICIAL!", image: "path/to/image4.jpg", video: "OFFICIAL.mp4", unlocked: false },
     { mintsRequired: 5000, text: "Most beloved item I own!", image: "path/to/image5.jpg", video: "My most beloved item.mp4", unlocked: false },
     { mintsRequired: 6000, text: "Our very first date!", image: "path/to/image6.jpg", video: "OurFirstDate.mp4", unlocked: false },
     { mintsRequired: 7000, text: "Everytime I play with you.. its a precious memory!", image: "", video: "GaMINIg.mp4", unlocked: false },
-    { mintsRequired: 400, text: "Memory 8: Holiday celebration.", image: "path/to/image8.jpg", video: "path/to/image8.mp4", unlocked: false },
-    { mintsRequired: 450, text: "Memory 9: Picnic in the park.", image: "path/to/image9.jpg", video: "path/to/video9.mp4", unlocked: false },
-    { mintsRequired: 500, text: "Memory 10: New Year's Eve party.", image: "path/to/image10.jpg", video: "path/to/video10.mp4", unlocked: false }
 ];
 
 mintButton.addEventListener('click', () => {
